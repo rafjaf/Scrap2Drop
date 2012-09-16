@@ -342,7 +342,7 @@ function addFolder() {
 					path = "";
 				}
 				// Create folder on Dropbox
-				dropboxClient.mkdir(path + "/" + folderName, function(error, stat){
+				dropboxClient.mkdir(path + "/" + folderName, function(error, stat) {
 					if (error) {showError(error);}
 					// Create Node
 					addNode(sel, folderName, true);
