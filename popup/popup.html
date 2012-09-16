@@ -1,0 +1,68 @@
+<html>
+<head>
+<link type="text/css" href="/lib/jquery-ui-1.8.23.custom.css" rel="stylesheet" />
+<script src="/lib/jquery-1.8.1.min.js"></script>
+<script src="/lib/jquery-ui-1.8.23.custom.min.js"></script>
+<script src="/lib/jquery.jstree.min.js"></script>
+<script src="/lib/dropbox.js"></script>
+<script src="popup.js"></script>
+<style>
+body {
+	width: 640px;
+	height: 480px;
+	font: -webkit-control;
+}
+td {
+	font: -webkit-control;
+}
+.ui-dialog-titlebar-close {
+	display: none;
+}
+</style>
+</head>
+<body>
+<div id="dialog" style="display: none"></div>
+<div id="hiddenTree" style="display: none">
+	<ul><li id="Scrap2DropRoot" path="/"><a href="#"></a></li></ul>
+</div>
+<div id="popupContent" style="display: none">
+	<div class="ui-dialog-buttonset">
+		<div style="float: left;">
+			<button id="addFolder" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false">
+				<span class="ui-button-text">
+				<img src="/img/plus16.png" style="padding-right: 4px; vertical-align: middle;">
+				<span style="vertical-align: middle;">Add a folder</span>
+			</button>
+		</div>
+		<div style="float: right;">
+			<button id="logoff" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false">
+				<span class="ui-button-text">
+				<img src="/img/logoff16.png" style="padding-right: 4px; vertical-align: middle;">
+				<span style="vertical-align: middle;">Log off from Dropbox</span>
+			</button>
+			<button id="openDropbox" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false">
+				<span class="ui-button-text">
+				<img src="/img/dropbox16.gif" style="padding-right: 4px; vertical-align: middle;">
+				<span style="vertical-align: middle;">Open in Dropbox</span>
+			</button>
+		</div>
+	</div>
+	<div style="padding-top: 15px; clear: both;">
+		<div id="tree" style="float: left; width: 235px; height: 380px; border: 1px solid gray;">
+			<ul><li id="Scrap2DropRoot"><a href="#" class="jstree-loading"></a></li></ul>
+		</div>
+		<div style="float: right; width: 390px; height: 380px; border: 1px solid gray;"></div>
+	</div>
+	<div style="clear: both; padding-top: 10px;">
+		<input id="pagename" type="text" class="ui-widget" style="width: 78%; margin-top: 8px;">
+		<div class="ui-dialog-buttonset" style="float: right;">
+			<button id="savePage" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false">
+				<span class="ui-button-text">
+				<img src="/img/heart16.png" style="padding-right: 4px; vertical-align: middle;">
+				<span style="vertical-align: middle;">Save page</span>
+			</button>
+		</div>
+	</div>
+</div>
+</body>
+</html>

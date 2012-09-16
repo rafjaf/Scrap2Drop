@@ -1,0 +1,19 @@
+{
+  "name": "Scrap2Drop",
+  "version": "0.1",
+  "manifest_version": 2,
+  "description": "Scrapbooking extension allowing to save & archive any webpage directly to your Dropbox account.",
+  "icons": {"16": "/img/heart16.png",
+            "48": "/img/heart48.png",
+           "128": "/img/heart128.png" },
+  "background": {
+  	"scripts": ["/bg/background.js", "/lib/dropbox.js"]
+  },
+  "options_page": "/about/about.html",
+  "browser_action": {
+    "default_icon": "/img/heart16.png",
+    "default_title": "Click here to archive this page to your Dropbox account",
+    "default_popup": "/popup/popup.html"
+  },
+  "permissions": ["storage", "tabs"]
+}
