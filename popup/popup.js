@@ -62,10 +62,12 @@ function init(arg) {
 	else if (arg == "Scrap2Drop") {
 		chrome.storage.local.get(["scopeSandbox", "lastsel"], function(item){
 			if (item.scopeSandbox == "sandbox") {
-				$("#Scrap2DropRoot > a").text("Scrap2Drop");
+				$("#Scrap2DropRoot > a").text("Scrap2Drop")
+				.parent().attr("rel", "sandbox");
 			}
 			else {
-				$("#Scrap2DropRoot > a").text("Dropbox");
+				$("#Scrap2DropRoot > a").text("Dropbox")
+				.parent().attr("rel", "dropbox");
 			}
 			$("#tree").jstree({
 				"themes": {"theme": "classic"},
@@ -218,7 +220,7 @@ function logoff() {
 		+ "If you do, you will have to give a new authorization before this extension is allowed to access to your dropbox again.")
 	.dialog({buttons: {
 		"Yes": function(){ dropboxClient.signOut(function() {
-			chrome.storage.local.remove("scopeSandbox");
+			chrome.storage.local.remove(["lastsel", "scopeSandbox"]);
 			$("#dialog").attr("title", "Log off successful")
 			.text("You have successfully logged off from Dropbox.")
 			.dialog({buttons: {"Ok" : closePopup}, closeOnEscape: false, modal: true, resizable: false});
@@ -251,7 +253,9 @@ function loadTreeDownTo(path, currentNode, recursive) {
 					currentNode.append("<ul></ul>");
 				}
 				var itemPath = currentPath + entry_stats[i].name + "/";
-				var item = $("<li path='" + itemPath + "'><a href='#'>" + entry_stats[i].name + "</a></li>")
+				var anchor = $("<a>").attr("href", "#").text(entry_stats[i].name);
+				var item = $("<li>").append(anchor).attr("path", itemPath)
+				// var item = $("<li path='" + escape(itemPath) + "'><a href='#'>" + entry_stats[i].name + "</a></li>")
 					.appendTo(currentNode.children("ul"));
 				var r;
 				if (recursive) {
@@ -273,7 +277,7 @@ function loadTreeDownTo(path, currentNode, recursive) {
 }
 
 function loadChildrenOf(node) {
-	node.find("li").each(function(index, el){
+	node.children("ul").children("li").each(function(index, el){
 		if ( !$(el).attr("loaded") ) {
 			var path = $(el).attr("path");
 			dropboxClient.readdir(path, function(error, entries, dir_stat, entry_stats) {
@@ -299,11 +303,26 @@ function renderTree() {
 	.jstree({
 		"html_data" : {"data" : $("#hiddenTree > ul").html()},
 		"themes": {"theme": "classic"},
+		"types" : {
+			"types": {
+				"dropbox": {
+					"icon": {"image": "/img/dropbox16.gif"}
+				},
+				"sandbox": {
+					"icon": {"image": "/img/heart16.png"}
+				},
+				"default": {
+					"icon": {
+						"image": "/img/jstree_grey.gif",
+						"position" : "-56px -19px"}
+				}
+			}
+		},
 		"ui": {
 			"initially_select": [ "lastsel" ],
 			"select_limit": 1
 		},
-		"plugins": ["html_data", "sort", "themes", "ui"]
+		"plugins": ["html_data", "sort", "themes", "types", "ui"]
 	})
 	.bind("select_node.jstree", function(event, data){
 		var lastsel = $(data.args[0]).parent().attr("path");
@@ -311,7 +330,7 @@ function renderTree() {
 	})
 	.bind("open_node.jstree", function(event, data){
 		loadChildrenOf($(data.args[0]));
-	});
+	}); 
 }
 
 function addFolder() {
@@ -364,6 +383,7 @@ function addFolder() {
 }
 
 function savePage() {
+//	$("#tree").jstree("open_all");
 }
 
 // MAIN
